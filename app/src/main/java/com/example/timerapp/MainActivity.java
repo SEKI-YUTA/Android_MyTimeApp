@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
                 .replace(R.id.fragment_container, new TimeFragment())
                 .commit();
 
+
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
