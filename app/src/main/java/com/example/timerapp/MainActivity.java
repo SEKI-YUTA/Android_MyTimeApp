@@ -8,9 +8,13 @@ import androidx.fragment.app.FragmentContainerView;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import com.example.timerapp.Models.Alarm;
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     FragmentContainerView fragmentContainerView;
@@ -24,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
         fragmentContainerView = findViewById(R.id.fragment_container);
         bottomNavigationView = findViewById(R.id.bottomNav);
 
+
+        // 初期状態だとフラグメントが何も表示されないのでとりあえずTimeFragmentを表示させておく
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragment_container, new TimeFragment())
                 .commit();

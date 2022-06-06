@@ -26,26 +26,26 @@ public class TimerFragment extends Fragment {
         // Inflate the layout for this fragment
         mediaPlayer = MediaPlayer.create(getContext(), R.raw.alarm1);
         View view = inflater.inflate(R.layout.fragment_timer, container, false);
-        btn_test = view.findViewById(R.id.btn_test);
-
-        TimePickerDialog.OnTimeSetListener listener = new TimePickerDialog.OnTimeSetListener() {
-            @Override
-            public void onTimeSet(TimePicker timePicker, int i, int i1) {
-                hour = i;
-                min = i1;
-                btn_test.setText(String.format(Locale.getDefault(), "%02d:%02d", hour, min));
-            }
-        };
-
-        btn_test.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                if(mediaPlayer.isPlaying()) return;
-//                mediaPlayer.start();
-                TimePickerDialog dialog = new TimePickerDialog(getContext(), listener, hour, min , true);
-                dialog.show();
-            }
-        });
+//        btn_test = view.findViewById(R.id.btn_test);
+//
+//        TimePickerDialog.OnTimeSetListener listener = new TimePickerDialog.OnTimeSetListener() {
+//            @Override
+//            public void onTimeSet(TimePicker timePicker, int i, int i1) {
+//                hour = i;
+//                min = i1;
+//                btn_test.setText(String.format(Locale.getDefault(), "%02d:%02d", hour, min));
+//            }
+//        };
+//
+//        btn_test.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+////                if(mediaPlayer.isPlaying()) return;
+////                mediaPlayer.start();
+//                TimePickerDialog dialog = new TimePickerDialog(getContext(), listener, hour, min , true);
+//                dialog.show();
+//            }
+//        });
 
 
 
