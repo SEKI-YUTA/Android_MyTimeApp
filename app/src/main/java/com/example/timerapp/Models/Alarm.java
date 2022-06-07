@@ -1,20 +1,22 @@
 package com.example.timerapp.Models;
 
+import java.util.Date;
+
 public class Alarm {
-    private String time;
+    private Date alarmTime;
     private boolean isActive;
 
-    public Alarm(String time, boolean isActive) {
-        this.time = time;
+    public Alarm(Date alarmTime, boolean isActive) {
+        this.alarmTime = alarmTime;
         this.isActive = isActive;
     }
 
-    public String getTime() {
-        return time;
+    public Date getAlarmTime() {
+        return alarmTime;
     }
 
-    public void setTime(String time) {
-        this.time = time;
+    public void setAlarmTime(Date alarmTime) {
+        this.alarmTime = alarmTime;
     }
 
     public boolean isActive() {

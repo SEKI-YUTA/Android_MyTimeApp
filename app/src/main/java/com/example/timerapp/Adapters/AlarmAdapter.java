@@ -38,7 +38,7 @@ public class AlarmAdapter extends RecyclerView.Adapter<AlarmAdapter.AlarmViewHol
     @Override
     public void onBindViewHolder(@NonNull AlarmViewHolder holder, int position) {
         Alarm alarm = alarmList.get(holder.getAdapterPosition());
-        holder.tv_alarmItem_Time.setText(alarm.getTime());
+        holder.tv_alarmItem_Time.setText(String.format("%02d:%02d", alarm.getAlarmTime().getHours(), alarm.getAlarmTime().getMinutes()));
         holder.alarmItem_toggleActive.setChecked(alarm.isActive());
 
         holder.alarmItem_toggleActive.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
