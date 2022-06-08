@@ -2,6 +2,7 @@ package com.example.timerapp.Utils;
 
 import android.content.Context;
 import android.media.MediaPlayer;
+import android.provider.Settings;
 
 import com.example.timerapp.R;
 
@@ -12,6 +13,8 @@ public class MyMediaManager {
     public static MyMediaManager getInstance(Context context) {
         if(mediaPlayer1 == null) {
             mediaPlayer1 = MediaPlayer.create(context, R.raw.alarm1);
+            // another way
+//            mediaPlayer1 = MediaPlayer.create(context, Settings.System.DEFAULT_RINGTONE_URI);
         }
         return mediaManager;
     }
