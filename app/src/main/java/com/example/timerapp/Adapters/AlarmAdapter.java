@@ -47,6 +47,13 @@ public class AlarmAdapter extends RecyclerView.Adapter<AlarmAdapter.AlarmViewHol
                 listener.toggleActive(b, alarm);
             }
         });
+
+        holder.alarmItem_container.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listener.onLongPressItem(alarmList.get(holder.getAdapterPosition()));
+            }
+        });
     }
 
     @Override
@@ -63,6 +70,7 @@ public class AlarmAdapter extends RecyclerView.Adapter<AlarmAdapter.AlarmViewHol
             alarmItem_container = itemView.findViewById(R.id.alarmItem_container);
             alarmItem_toggleActive = itemView.findViewById(R.id.alarmItem_toggleActive);
             tv_alarmItem_Time = itemView.findViewById(R.id.tv_alarmItem_Time);
+
         }
     }
 }

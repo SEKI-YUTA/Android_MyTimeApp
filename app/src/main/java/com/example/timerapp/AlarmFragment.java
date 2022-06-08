@@ -1,5 +1,7 @@
 package com.example.timerapp;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -107,6 +109,27 @@ public class AlarmFragment extends Fragment implements OnAlarmToggleListener {
         } else {
             Toast.makeText(getContext(), dateFormat.format(alarm.getAlarmTime()) + "のタイマーをオフにしました", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    public void onLongPressItem(Alarm alarm) {
+        Date alarmDate = alarm.getAlarmTime();
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setMessage(String.format("%02d:%02d", alarmDate.getHours(), alarmDate.getMinutes()) + "のアラームを削除しますか？")
+                        .setPositiveButton("はい", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                alarmList.remove(alarm);
+                                adapter.notifyDataSetChanged();
+                            }
+                        })
+                .setNegativeButton("いいえ", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        return;
+                    }
+                }).show();
+
     }
 
     NumberPicker.OnValueChangeListener listener = new NumberPicker.OnValueChangeListener() {
