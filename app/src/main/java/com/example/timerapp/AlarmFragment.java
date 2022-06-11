@@ -2,6 +2,7 @@ package com.example.timerapp;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 import com.example.timerapp.Adapters.AlarmAdapter;
 import com.example.timerapp.Listeners.OnAlarmToggleListener;
 import com.example.timerapp.Models.Alarm;
+import com.example.timerapp.Utils.MyMediaManager;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.ParseException;
@@ -26,15 +28,19 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class AlarmFragment extends Fragment implements OnAlarmToggleListener {
     public static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.JAPAN);
     int numHour, numMin = 0;
+    MyMediaManager mediaManager;
     NumberPicker numPickerHour, numPickerMin;
     RecyclerView recyclerView;
     FloatingActionButton fab_addAlarm;
     List<Alarm> alarmList = new ArrayList<>();
     AlarmAdapter adapter;
+    Timer alarmTimer;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -60,7 +66,6 @@ public class AlarmFragment extends Fragment implements OnAlarmToggleListener {
             @Override
             public void onClick(View view) {
                 // add Alarm
-                // とりあえず適当なデータを追加してみる
                 Date now = new Date();
                 Date alarmDate;
                 Log.d("MyLog", String.valueOf(now.getMonth()));
@@ -69,7 +74,6 @@ public class AlarmFragment extends Fragment implements OnAlarmToggleListener {
 
                 Log.d("MyLog", dateFormat.format(now));
                 try {
-
                     alarmDate = dateFormat.parse(String.format("%04d-%02d-%02d %02d:%02d", now.getYear() + 1900, now.getMonth() + 1, now.getDate(), numHour, numMin));
                     if(alarmDate.before(now)) {
                         alarmDate = new Date(alarmDate.getTime() + (60*60*24*1000));
@@ -106,8 +110,29 @@ public class AlarmFragment extends Fragment implements OnAlarmToggleListener {
     public void toggleActive(boolean isActive, Alarm alarm) {
         if (isActive) {
             Toast.makeText(getContext(), dateFormat.format(alarm.getAlarmTime()) + "のタイマーをオンにしました", Toast.LENGTH_SHORT).show();
+            alarmTimer = new Timer();
+            alarmTimer.scheduleAtFixedRate(new TimerTask() {
+                @Override
+                public void run() {
+                    Date now = new Date();
+                    int index = alarmList.indexOf(alarm);
+                    Date alarmTime = alarmList.get(index).getAlarmTime();
+                    if(now.getTime() > alarmTime.getTime()) {
+                        mediaManager = MyMediaManager.getInstance(getContext());
+                        mediaManager.playSound1();
+                        Intent intent = new Intent(getContext(), RingingActivity.class);
+                        intent.putExtra("alarm", alarm);
+                        startActivity(intent);
+                        this.cancel();
+                    }
+                }
+            }, 0, 1000);
         } else {
             Toast.makeText(getContext(), dateFormat.format(alarm.getAlarmTime()) + "のタイマーをオフにしました", Toast.LENGTH_SHORT).show();
+            if(alarmTimer != null) {
+                alarmTimer.cancel();
+                alarmTimer = null;
+            }
         }
     }
 

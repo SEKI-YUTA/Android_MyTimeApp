@@ -1,6 +1,9 @@
 package com.example.timerapp.Adapters;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,12 +19,17 @@ import com.example.timerapp.Listeners.OnAlarmToggleListener;
 import com.example.timerapp.Models.Alarm;
 import com.example.timerapp.R;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class AlarmAdapter extends RecyclerView.Adapter<AlarmAdapter.AlarmViewHolder> {
     Context context;
     List<Alarm> alarmList;
     OnAlarmToggleListener listener;
+    Handler handler = new Handler();
+    boolean isRinging = false;
 
     public AlarmAdapter(Context context, List<Alarm> alarmList, OnAlarmToggleListener listener) {
         this.context = context;
@@ -54,6 +62,8 @@ public class AlarmAdapter extends RecyclerView.Adapter<AlarmAdapter.AlarmViewHol
                 listener.onLongPressItem(alarmList.get(holder.getAdapterPosition()));
             }
         });
+
+
     }
 
     @Override
